@@ -9,6 +9,11 @@ const formSchema = new Schema({
     area: {
         type: String
     },
+    fabrica: {
+        type: Schema.Types.ObjectId,
+        ref: 'Factory',
+        required: [true, 'Debe de existir una referencia a una fabrica']
+    },
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
@@ -25,9 +30,7 @@ formSchema.pre<IForm>('save', function( next ) {
 interface IForm extends Document {
     created: Date;
     area: string;
-   /* pregunta: string;
-     comentario: string;
-    img: string[]; */
+    fabrica: string;
     usuario: string; 
 }
 

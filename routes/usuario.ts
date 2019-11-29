@@ -29,7 +29,9 @@ userRoutes.post('/login', (req: Request, res: Response) => {
                 _id: userDB._id,
                 nombre: userDB.nombre,
                 email: userDB.email,
-                avatar: userDB.avatar
+                avatar: userDB.avatar,
+                idioma: userDB.idioma,
+                fabrica: userDB.fabrica
             });
 
             res.json({
@@ -55,16 +57,21 @@ userRoutes.post('/create', (req: Request, res: Response) => {
         nombre: req.body.nombre,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
-        avatar: req.body.avatar
+        avatar: req.body.avatar,
+        idioma: req.body.idioma,
+        fabrica: req.body.fabrica
     };
 
     Usuario.create( user ).then( userDB => {
+
 
         const tokenUser = Token.getJwtToken({
             _id: userDB._id,
             nombre: userDB.nombre,
             email: userDB.email,
-            avatar: userDB.avatar
+            avatar: userDB.avatar,
+            idioma: userDB.idioma,
+            fabrica: userDB.fabrica
         });
 
         res.json({
@@ -88,6 +95,8 @@ userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
         nombre: req.body.nombre || req.usuario.nombre,
         email: req.body.email || req.usuario.email,
         avatar: req.body.avatar || req.usuario.avatar,
+        idioma: req.body.idioma || req.usuario.idioma,
+        fabrica: req.body.fabrica || req.usuario.fabrica
     }
 
     Usuario.findByIdAndUpdate( req.usuario._id, user, {new: true}, (err, userDB) =>{
@@ -105,7 +114,8 @@ userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
             _id: userDB._id,
             nombre: userDB.nombre,
             email: userDB.email,
-            avatar: userDB.avatar
+            avatar: userDB.avatar,
+            fabrica: userDB.fabrica
         });
 
         res.json({
@@ -124,6 +134,7 @@ userRoutes.get('/', [ verificaToken ], ( req: any, res: Response ) => {
     const usuario = req.usuario;
     res.json({
         ok: true,
+        message: 'usuario por token',
         usuario
     });
 });

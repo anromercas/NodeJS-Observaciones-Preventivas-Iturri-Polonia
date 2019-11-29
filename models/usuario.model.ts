@@ -17,6 +17,15 @@ const usuarioSchema = new Schema({
         unique: true,
         required: [true, 'El email es necesario']
     },
+    idioma: {
+        type: String,
+        required: [true, 'El idioma es necesario']
+    },
+    fabrica: {
+        type: Schema.Types.ObjectId,
+        ref: 'Factory',
+        required: [true, 'Debe de existir una referencia a una fabrica']
+    },
     password: {
         type: String,
         required: [true, 'La contraseña es necesaria']
@@ -36,6 +45,8 @@ interface IUsuario extends Document {
     nombre: string;
     email: string;
     password: string;
+    idioma: string;
+    fabrica: string;
     avatar: string;
 
     compararPassword(password: string): boolean;

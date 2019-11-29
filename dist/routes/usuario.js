@@ -26,7 +26,9 @@ userRoutes.post('/login', (req, res) => {
                 _id: userDB._id,
                 nombre: userDB.nombre,
                 email: userDB.email,
-                avatar: userDB.avatar
+                avatar: userDB.avatar,
+                idioma: userDB.idioma,
+                fabrica: userDB.fabrica
             });
             res.json({
                 ok: true,
@@ -47,14 +49,18 @@ userRoutes.post('/create', (req, res) => {
         nombre: req.body.nombre,
         email: req.body.email,
         password: bcrypt_1.default.hashSync(req.body.password, 10),
-        avatar: req.body.avatar
+        avatar: req.body.avatar,
+        idioma: req.body.idioma,
+        fabrica: req.body.fabrica
     };
     usuario_model_1.Usuario.create(user).then(userDB => {
         const tokenUser = token_1.default.getJwtToken({
             _id: userDB._id,
             nombre: userDB.nombre,
             email: userDB.email,
-            avatar: userDB.avatar
+            avatar: userDB.avatar,
+            idioma: userDB.idioma,
+            fabrica: userDB.fabrica
         });
         res.json({
             ok: true,
@@ -74,6 +80,8 @@ userRoutes.post('/update', autenticacion_1.verificaToken, (req, res) => {
         nombre: req.body.nombre || req.usuario.nombre,
         email: req.body.email || req.usuario.email,
         avatar: req.body.avatar || req.usuario.avatar,
+        idioma: req.body.idioma || req.usuario.idioma,
+        fabrica: req.body.fabrica || req.usuario.fabrica
     };
     usuario_model_1.Usuario.findByIdAndUpdate(req.usuario._id, user, { new: true }, (err, userDB) => {
         if (err)
@@ -88,7 +96,8 @@ userRoutes.post('/update', autenticacion_1.verificaToken, (req, res) => {
             _id: userDB._id,
             nombre: userDB.nombre,
             email: userDB.email,
-            avatar: userDB.avatar
+            avatar: userDB.avatar,
+            fabrica: userDB.fabrica
         });
         res.json({
             ok: true,
@@ -101,6 +110,7 @@ userRoutes.get('/', [autenticacion_1.verificaToken], (req, res) => {
     const usuario = req.usuario;
     res.json({
         ok: true,
+        message: 'usuario por token',
         usuario
     });
 });

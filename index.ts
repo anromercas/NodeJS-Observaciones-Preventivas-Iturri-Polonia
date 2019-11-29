@@ -9,6 +9,8 @@ import fileUpload from 'express-fileupload'
 import userRoutes from "./routes/usuario";
 import formRoutes from "./routes/form";
 import questionRoutes from "./routes/question";
+import factoryRoutes from "./routes/factory";
+import iObservationRoutes from "./routes/initialObservation";
 
 const server = new Server();
 
@@ -27,6 +29,8 @@ server.app.use( cors({ origin: true, credentials: true }) );
 server.app.use( '/user', userRoutes );
 server.app.use( '/form', formRoutes );
 server.app.use( '/question', questionRoutes );
+server.app.use( '/factory', factoryRoutes );
+server.app.use( '/iobservation', iObservationRoutes );
 
 // Conectar DB
 mongoose.connect('mongodb://localhost:27017/prev-obs-iturri-pol',

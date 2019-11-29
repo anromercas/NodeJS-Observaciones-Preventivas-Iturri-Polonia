@@ -8,6 +8,11 @@ const formSchema = new mongoose_1.Schema({
     area: {
         type: String
     },
+    fabrica: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'Factory',
+        required: [true, 'Debe de existir una referencia a una fabrica']
+    },
     usuario: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Usuario',

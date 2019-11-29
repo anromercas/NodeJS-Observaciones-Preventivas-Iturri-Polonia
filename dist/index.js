@@ -11,6 +11,8 @@ const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
 const form_1 = __importDefault(require("./routes/form"));
 const question_1 = __importDefault(require("./routes/question"));
+const factory_1 = __importDefault(require("./routes/factory"));
+const initialObservation_1 = __importDefault(require("./routes/initialObservation"));
 const server = new server_1.default();
 // Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -23,6 +25,8 @@ server.app.use(cors_1.default({ origin: true, credentials: true }));
 server.app.use('/user', usuario_1.default);
 server.app.use('/form', form_1.default);
 server.app.use('/question', question_1.default);
+server.app.use('/factory', factory_1.default);
+server.app.use('/iobservation', initialObservation_1.default);
 // Conectar DB
 mongoose_1.default.connect('mongodb://localhost:27017/prev-obs-iturri-pol', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err) {
