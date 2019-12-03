@@ -51,7 +51,7 @@ userRoutes.post('/create', (req, res) => {
         password: bcrypt_1.default.hashSync(req.body.password, 10),
         avatar: req.body.avatar,
         idioma: req.body.idioma,
-        fabrica: req.body.fabrica
+        fabrica: req.body.fabrica || ''
     };
     usuario_model_1.Usuario.create(user).then(userDB => {
         const tokenUser = token_1.default.getJwtToken({

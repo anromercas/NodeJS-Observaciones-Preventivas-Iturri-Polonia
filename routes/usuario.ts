@@ -59,7 +59,7 @@ userRoutes.post('/create', (req: Request, res: Response) => {
         password: bcrypt.hashSync(req.body.password, 10),
         avatar: req.body.avatar,
         idioma: req.body.idioma,
-        fabrica: req.body.fabrica
+        fabrica: req.body.fabrica || ''
     };
 
     Usuario.create( user ).then( userDB => {
