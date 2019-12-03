@@ -33,7 +33,7 @@ server.app.use( '/factory', factoryRoutes );
 server.app.use( '/iobservation', iObservationRoutes );
 
 // Conectar DB
-mongoose.connect('mongodb://localhost:27017/prev-obs-iturri-pol',
+mongoose.connect('mongodb://mongo:27017/prev-obs-iturri-pol',
                 { useNewUrlParser: true, useCreateIndex: true }, (err: any) => {
 
                     if ( err ){ throw err};
