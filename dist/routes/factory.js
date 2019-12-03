@@ -31,7 +31,7 @@ factoryRoutes.get('/getFactory', [autenticacion_1.verificaToken], (req, res) => 
     });
 }));
 // crear fabrica
-factoryRoutes.post('/', [autenticacion_1.verificaToken], (req, res) => __awaiter(this, void 0, void 0, function* () {
+factoryRoutes.post('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
     const body = req.body;
     fabrica_model_1.Factory.create(body).then(factoryDB => {
         res.json({

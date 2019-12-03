@@ -33,7 +33,7 @@ factoryRoutes.get('/getFactory', [verificaToken], async (req: any, res: Response
 });
 
 // crear fabrica
-factoryRoutes.post('/', [verificaToken], async (req: any, res: Response) => {
+factoryRoutes.post('/', async (req: any, res: Response) => {
 
     const body = req.body;
 

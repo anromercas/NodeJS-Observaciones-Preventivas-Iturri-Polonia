@@ -26,6 +26,7 @@ const usuarioSchema = new mongoose_1.Schema({
     fabrica: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Factory',
+        required: [true, 'Debe de existir una referencia a una fabrica']
     },
     password: {
         type: String,
