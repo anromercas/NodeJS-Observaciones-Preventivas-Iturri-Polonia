@@ -23,8 +23,7 @@ const usuarioSchema = new Schema({
     },
     fabrica: {
         type: Schema.Types.ObjectId,
-        ref: 'Factory',
-        required: [true, 'Debe de existir una referencia a una fabrica']
+        ref: 'Factory'
     },
     password: {
         type: String,
