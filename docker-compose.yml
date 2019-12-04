@@ -12,16 +12,17 @@ services:
         depends_on:
             - mongo
         volumes:
-            - ./dist/uploads:/app/dist/uploads
+            - uploads:/app/dist/uploads
         environment:
             WAIT_HOSTS: mongo:27017
     mongo:
         container_name: mongo
         image: mongo
         volumes:
-            - ./data:/data/db
+            - data:/data/db
         ports: 
             - "27017:27017"
-    columes:
-        mongo:
-        app:
+        restart: always
+volumes:
+    data:
+    uploads:
