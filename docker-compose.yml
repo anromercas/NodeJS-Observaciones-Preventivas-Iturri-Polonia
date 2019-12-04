@@ -8,9 +8,11 @@ services:
         ports: 
             - "3000:3000"
         links:
-            - mongo
+            - mongo:mongo
         depends_on:
             - mongo
+        volumes:
+            - ./dist/uploads:/app/dist/uploads
         environment:
             WAIT_HOSTS: mongo:27017
     mongo:
@@ -20,3 +22,6 @@ services:
             - ./data:/data/db
         ports: 
             - "27017:27017"
+    columes:
+        mongo:
+        app:
