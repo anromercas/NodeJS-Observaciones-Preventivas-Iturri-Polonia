@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 export default class Token{
 
     private static seed: string = 'este-es-el-seed-de-mi-app-secreto';
-    private static caducidad: string = '30d';
+    // private static caducidad: string = '30d';
 
     constructor() { }
 
@@ -12,7 +12,7 @@ export default class Token{
         
         return jwt.sign({
             usuario: payload
-        }, this.seed, { expiresIn: this.caducidad })
+        }, this.seed/* , { expiresIn: this.caducidad } */)
     }
 
     static comprobarToken( userToken: string ) {
