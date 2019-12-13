@@ -129,7 +129,7 @@ userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
 });
 
 // Get de todos los usuarios
-userRoutes.get('/', [ verificaToken ], async ( req: any, res: Response ) => {
+userRoutes.get('/users', [ verificaToken ], async ( req: any, res: Response ) => {
 
     const usuarios = await Usuario.find({}).exec();
             res.json({
