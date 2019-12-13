@@ -150,4 +150,18 @@ userRoutes.get('/', [ verificaToken ], ( req: any, res: Response ) => {
     });
 });
 
+
+userRoutes.delete('/delete-user', [verificaToken], async (req: any, res: Response) => {
+
+    let id = req.query.id;
+
+    const usuario = await Usuario.findByIdAndRemove({ _id: id })
+                                .exec();
+                    res.json({
+                        ok: true,
+                        usuario
+                    });
+    
+    });
+
 export default userRoutes;
