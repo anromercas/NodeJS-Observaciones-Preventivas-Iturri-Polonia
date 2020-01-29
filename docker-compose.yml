@@ -12,17 +12,61 @@ services:
         depends_on:
             - mongo
         volumes:
-            - uploads:/app/dist/uploads
+            - uploads:/var/www/api.iturriops.com/dist/uploads
         environment:
             WAIT_HOSTS: mongo:27017
+        networks:
+            - app-network
     mongo:
         container_name: mongo
         image: mongo
         volumes:
             - data:/data/db
         ports: 
-            - "27017:27017"
+            - "27018:27017"
         restart: always
+        networks:
+            - app-network
+    webserver:
+        image: nginx:mainline-alpine
+        container_name: webserver
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - web-root:/var/www/api.iturriops.com
+            - ./nginx-conf:/etc/nginx/conf.d
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+        depends_on:
+            - app
+        networks:
+            - app-network
+    certbot:
+        image: certbot/certbot
+        container_name: certbot
+        volumes:
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+            - web-root:/var/www/api.iturriops.com
+        depends_on:
+            - webserver
+        command: certonly --webroot --webroot-path=/var/www/api.iturriops.com --email nuria@cornersafety.com --agree-tos --no-eff-email --staging -d iturriops.com  -d www.iturriops.com -d iturriops.com -d api.iturriops.com
+    
 volumes:
+    certbot-etc:
+    certbot-var:
     data:
     uploads:
+    web-root:
+        driver: local
+        driver_opts:
+          type: none
+          device: /home/userdeploy/app/NodeJS-Observaciones-Preventivas-Iturri-Polonia/dist
+          o: bind
+
+networks:
+    app-network:
+        driver: bridge
+    

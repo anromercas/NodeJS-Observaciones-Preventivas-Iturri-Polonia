@@ -161,7 +161,6 @@ userRoutes.delete('/delete-user', [verificaToken], async (req: any, res: Respons
                         ok: true,
                         usuario
                     });
-    
     });
 
 export default userRoutes;

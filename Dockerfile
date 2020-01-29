@@ -1,6 +1,6 @@
 FROM node:10
 
-WORKDIR /app
+WORKDIR /var/www/api.iturriops.com
 
 COPY package*.json ./
 
