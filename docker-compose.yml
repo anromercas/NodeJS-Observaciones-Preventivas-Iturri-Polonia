@@ -48,6 +48,7 @@ services:
     certbot:
         build: ./certbot
         container_name: certbot
+        restart: always
         volumes:
             - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
             - certbot-letsencrypt:/etc/letsencrypt

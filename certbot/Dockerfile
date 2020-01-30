@@ -5,7 +5,7 @@ FROM debian:jessie
 
 # Install cron, certbot, bash, plus any other dependencies
 RUN apt-get update \
-   && apt-get install -y cron bash wget
+   && apt-get install -y cron bash wget apt-utils
 RUN mkdir -p /webroots/iturriops.com/.well-known /scripts
 
 WORKDIR /scripts
