@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:mainline-alpine
 
 # RUN rm /var/log/nginx/access-out.log
 # RUN rm /var/log/nginx/error-out.log
