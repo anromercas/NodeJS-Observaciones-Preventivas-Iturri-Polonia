@@ -13,7 +13,7 @@ services:
             - mongo
         volumes:
             - uploads:/var/www/api.iturriops.com/dist/uploads
-            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
             - certbot-letsencrypt:/etc/letsencrypt
         environment:
             WAIT_HOSTS: mongo:27017
@@ -24,7 +24,7 @@ services:
         image: mongo
         volumes:
             - data:/data/db
-            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
             - certbot-letsencrypt:/etc/letsencrypt
         ports: 
             - "27018:27017"
@@ -39,7 +39,7 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
             - certbot-letsencrypt:/etc/letsencrypt
         depends_on:
             - app
@@ -49,7 +49,7 @@ services:
         build: ./certbot
         container_name: certbot
         volumes:
-            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
             - certbot-letsencrypt:/etc/letsencrypt
         depends_on:
             - nginx
