@@ -11,6 +11,7 @@ import formRoutes from "./routes/form";
 import questionRoutes from "./routes/question";
 import factoryRoutes from "./routes/factory";
 import iObservationRoutes from "./routes/initialObservation";
+import indexRoutes from "./routes/index";
 
 const server = new Server();
 
@@ -31,6 +32,7 @@ server.app.use( '/form', formRoutes );
 server.app.use( '/question', questionRoutes );
 server.app.use( '/factory', factoryRoutes );
 server.app.use( '/iobservation', iObservationRoutes );
+server.app.use('/', indexRoutes);
 
 // Conectar DB
 mongoose.connect('mongodb://mongo:27017/prev-obs-iturri-pol',

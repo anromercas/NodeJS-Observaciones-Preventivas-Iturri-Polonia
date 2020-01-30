@@ -13,6 +13,7 @@ const form_1 = __importDefault(require("./routes/form"));
 const question_1 = __importDefault(require("./routes/question"));
 const factory_1 = __importDefault(require("./routes/factory"));
 const initialObservation_1 = __importDefault(require("./routes/initialObservation"));
+const index_1 = __importDefault(require("./routes/index"));
 const server = new server_1.default();
 // Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -27,8 +28,9 @@ server.app.use('/form', form_1.default);
 server.app.use('/question', question_1.default);
 server.app.use('/factory', factory_1.default);
 server.app.use('/iobservation', initialObservation_1.default);
+server.app.use('/', index_1.default);
 // Conectar DB
-mongoose_1.default.connect('mongodb://localhost:27017/prev-obs-iturri-pol', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+mongoose_1.default.connect('mongodb://mongo:27017/prev-obs-iturri-pol', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err) {
         throw err;
     }

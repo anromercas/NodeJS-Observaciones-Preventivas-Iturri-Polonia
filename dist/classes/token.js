@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class Token {
+    // private static caducidad: string = '30d';
     constructor() { }
     static getJwtToken(payload) {
         return jsonwebtoken_1.default.sign({
             usuario: payload
-        }, this.seed, { expiresIn: this.caducidad });
+        }, this.seed /* , { expiresIn: this.caducidad } */);
     }
     static comprobarToken(userToken) {
         return new Promise((resolve, reject) => {
@@ -25,5 +26,4 @@ class Token {
     }
 }
 Token.seed = 'este-es-el-seed-de-mi-app-secreto';
-Token.caducidad = '30d';
 exports.default = Token;

@@ -13,8 +13,8 @@ services:
             - mongo
         volumes:
             - uploads:/var/www/api.iturriops.com/dist/uploads
-            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
-            - certbot-letsencrypt:/etc/letsencrypt
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot   
         environment:
             WAIT_HOSTS: mongo:27017
         networks:
@@ -24,40 +24,40 @@ services:
         image: mongo
         volumes:
             - data:/data/db
-            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
-            - certbot-letsencrypt:/etc/letsencrypt
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot   
         ports: 
             - "27018:27017"
         restart: always
         networks:
             - app-network
     nginx:
-        build: ./nginx
+        image: nginx:1.15-alpine
         container_name: nginx
         restart: always
         ports:
             - "80:80"
             - "443:443"
         volumes:
-            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
-            - certbot-letsencrypt:/etc/letsencrypt
+            - ./nginx:/etc/nginx/conf.d
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot   
         depends_on:
             - app
         networks:
             - app-network
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     certbot:
-        build: ./certbot
+        build: certbot/certbot
         container_name: certbot
         restart: always
         volumes:
-            - certbot-webroot-iturriops:/webroots/iturriops.com/.well-known
-            - certbot-letsencrypt:/etc/letsencrypt
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot  
         depends_on:
             - nginx
-    
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 volumes:
-    certbot-webroot-iturriops:
-    certbot-letsencrypt:
     data:
     uploads:
     
