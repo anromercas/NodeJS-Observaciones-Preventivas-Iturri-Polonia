@@ -1,6 +1,9 @@
 FROM node:10
 
-WORKDIR /var/www/api.iturriops.com
+RUN apt-get update -y \
+    && apt-get -y install curl python build-essential git ca-certificates 
+
+WORKDIR /app
 
 COPY package*.json ./
 

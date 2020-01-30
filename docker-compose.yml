@@ -13,6 +13,8 @@ services:
             - mongo
         volumes:
             - uploads:/var/www/api.iturriops.com/dist/uploads
+            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-letsencrypt:/etc/letsencrypt
         environment:
             WAIT_HOSTS: mongo:27017
         networks:
@@ -22,56 +24,42 @@ services:
         image: mongo
         volumes:
             - data:/data/db
+            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-letsencrypt:/etc/letsencrypt
         ports: 
             - "27018:27017"
         restart: always
         networks:
             - app-network
-    webserver:
-        image: nginx:mainline-alpine
-        container_name: webserver
-        restart: unless-stopped
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: always
         ports:
             - "80:80"
             - "443:443"
         volumes:
-            - web-root:/var/www/api.iturriops.com
-            - ./nginx-conf:/etc/nginx/conf.d
-            - certbot-etc:/etc/letsencrypt
-            - certbot-var:/var/lib/letsencrypt
-            - dhparam:/etc/ssl/certs
+            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-letsencrypt:/etc/letsencrypt
         depends_on:
             - app
         networks:
             - app-network
     certbot:
-        image: certbot/certbot
+        build: ./certbot
         container_name: certbot
         volumes:
-            - certbot-etc:/etc/letsencrypt
-            - certbot-var:/var/lib/letsencrypt
-            - web-root:/var/www/api.iturriops.com
+            - certbot-webroot-iturriops:/app/public/.well-known
+            - certbot-letsencrypt:/etc/letsencrypt
         depends_on:
-            - webserver
-        command: certonly --webroot --webroot-path=/var/www/api.iturriops.com --email nuria@cornersafety.com --agree-tos --no-eff-email --staging -d iturriops.com  -d www.iturriops.com -d iturriops.com -d api.iturriops.com
+            - nginx
     
 volumes:
-    certbot-etc:
-    certbot-var:
+    certbot-webroot-iturriops:
+    certbot-letsencrypt:
     data:
     uploads:
-    web-root:
-        driver: local
-        driver_opts:
-          type: none
-          device: /home/userdeploy/app/NodeJS-Observaciones-Preventivas-Iturri-Polonia/dist
-          o: bind
-    dhparam:
-        driver: local
-        driver_opts:
-            type: none
-            device: /home/userdeploy/app/NodeJS-Observaciones-Preventivas-Iturri-Polonia/dhparam/
-            o: bind
+    
 
 networks:
     app-network:
