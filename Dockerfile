@@ -1,7 +1,7 @@
 FROM node:10
 
 RUN apt-get update -y \
-    && apt-get -y install curl python build-essential git ca-certificates 
+    && apt-get -y install curl python build-essential git ca-certificates apt-utils
 
 WORKDIR /app
 
