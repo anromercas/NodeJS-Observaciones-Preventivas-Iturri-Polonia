@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(iturriops.com www.iturriops.com api.iturriops.com)
+domains=(iturriops.com api.iturriops.com)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="nuria@cornersafety.com" # Adding a valid address is strongly recommended
