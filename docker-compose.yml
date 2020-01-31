@@ -14,7 +14,8 @@ services:
         volumes:
             - uploads:/var/www/api.iturriops.com/dist/uploads
             - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot   
+            - ./data/certbot/www:/var/www/certbot
+            - ./public:/var/www/iturriops.com
         environment:
             WAIT_HOSTS: mongo:27017
         networks:
@@ -25,7 +26,8 @@ services:
         volumes:
             - data:/data/db
             - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot   
+            - ./data/certbot/www:/var/www/certbot
+            - ./public:/var/www/iturriops.com
         ports: 
             - "27018:27017"
         restart: always
@@ -41,7 +43,8 @@ services:
         volumes:
             - ./nginx:/etc/nginx/conf.d
             - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot   
+            - ./data/certbot/www:/var/www/certbot
+            - ./public:/var/www/iturriops.com
         depends_on:
             - app
         networks:
@@ -53,15 +56,14 @@ services:
         restart: always
         volumes:
             - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot  
+            - ./data/certbot/www:/var/www/certbot
+            - ./public:/var/www/iturriops.com
         depends_on:
             - nginx
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 volumes:
     data:
     uploads:
-    
-
 networks:
     app-network:
         driver: bridge
